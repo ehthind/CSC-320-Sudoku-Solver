@@ -1,8 +1,17 @@
-
 import sys
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#   convertBase9(x,y,z)
+#   Converts values x,y,z to assignment specified base 9 values
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+def convertBase9(x,y,z):
+  return (x-1)*81 + (y-1)*9 + (z-1) + 1
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   parseAndFormat(filePath)
-#    formats input file into one string
+#   Formats input file into one string
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def parseAndFormat(filePath):
 
     try:
@@ -20,8 +29,11 @@ def parseAndFormat(filePath):
     encodedLine = encodedLine.replace('.', '0').replace('*', '0').replace('?', '0')
     return encodedLine
 
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   makeBoard(puzzle)
-#    create a 2 by 2 array with values from the input puzzle
+#   Create a 2 by 2 array with values from the input puzzle
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def makeBoard(puzzle):
   arr = [[0 for x in range(9)] for x in range(9)]
   for i in range(9):
@@ -30,8 +42,10 @@ def makeBoard(puzzle):
   return arr
 
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   main()
 #
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def main():
 
     print("Starting the SAT Solver!\n")
