@@ -11,10 +11,10 @@ def convertBase9(x,y,z):
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-#   givenValuesCNF(x,y,z)
+#   givenValuesCNF(puzzle)
 #
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-def givenValuesCNF(f, grid):
+def givenValuesCNF(puzzle):
   count = 0
   for x in range(9):
     for y in range(9):
