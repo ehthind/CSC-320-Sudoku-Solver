@@ -66,6 +66,14 @@ def makeBoard(puzzle):
       arr[i][j] = puzzle[ i * 9 + j ]
   return arr
 
+def basic_clauses():
+	for i in range(1,10):
+		for j in range(1,10):
+			for k in range(1,10):
+				temp  = temp + str(convertBase9(i,j,k);)
+			temp = temp + ' 0\n'
+			writeToFile(temp);
+return
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   main()
