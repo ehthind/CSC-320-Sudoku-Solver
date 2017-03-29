@@ -1,11 +1,36 @@
 import sys
 
+global FILE
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   convertBase9(x,y,z)
 #   Converts values x,y,z to assignment specified base 9 values
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def convertBase9(x,y,z):
   return (x-1)*81 + (y-1)*9 + (z-1) + 1
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#   givenValuesCNF(x,y,z)
+#
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+def givenValuesCNF(f, grid):
+  count = 0
+  for x in range(9):
+    for y in range(9):
+      if grid[x][y] != '0':
+        f.write(str(convertBase9(x+1, y+1, int(grid[x][y]))) + ' 0\n')
+        count += 1
+  return count
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#   writeToFile(string)
+#
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+def writeToFile(string):
+    FILE.write(string)
+    return
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -52,6 +77,11 @@ def main():
     if len(sys.argv) < 2:
         print("Error: Incorrect arguments")
         print("To run: python sat2sud.py <input> <minisat path>")
+        sys.exit(-1)
+    try:
+        FILE = open('output_file', 'w')
+    except:
+        print("Unable to open file: " + 'output_file')
         sys.exit(-1)
 
     formatPuzzle = parseAndFormat(sys.argv[1])
