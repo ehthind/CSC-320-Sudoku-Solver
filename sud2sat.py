@@ -19,7 +19,7 @@ def givenValuesCNF(f, grid):
   for x in range(9):
     for y in range(9):
       if grid[x][y] != '0':
-        f.write(str(convertBase9(x+1, y+1, int(grid[x][y]))) + ' 0\n')
+        writeToFile(str(convertBase9(x+1, y+1, int(grid[x][y]))) + ' 0\n')
         count += 1
   return count
 
