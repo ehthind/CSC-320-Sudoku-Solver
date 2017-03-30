@@ -75,6 +75,30 @@ def basic_clauses():
 			writeToFile(temp);
 return
 
+def rule_clauses():
+	k =1
+	j =1
+	v =1+j
+	for i in range(1,10):
+		while(j!=10):
+			for v in range(v, 10):
+				print '-',
+				encoder(i, j, k);
+				print '-'
+				encoder(i, v, k);
+				print'0\n'
+			j = j+1
+			v = j+1
+			if j==10:
+				j =1
+				v =j+1
+				k = k+1
+			if k==10:
+				k = 1
+				break
+		j =1
+		v =j+1
+	return
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   main()
 #
