@@ -87,6 +87,7 @@ def rule_clauses():
 				temp = temp + '-'
 				temp = temp + str(convertBase9(i, v, k);)
 				temp = temp + '0\n'
+				writeToFile(temp);
 			j = j+1
 			v = j+1
 			if j==10:
