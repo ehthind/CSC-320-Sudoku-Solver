@@ -82,11 +82,11 @@ def rule_clauses():
 	for i in range(1,10):
 		while(j!=10):
 			for v in range(v, 10):
-				print '-',
-				encoder(i, j, k);
-				print '-'
-				encoder(i, v, k);
-				print'0\n'
+				temp = '-'
+				temp = temp + str(convertBase9(i, j, k);)
+				temp = temp + '-'
+				temp = temp + str(convertBase9(i, v, k);)
+				temp = temp + '0\n'
 			j = j+1
 			v = j+1
 			if j==10:
