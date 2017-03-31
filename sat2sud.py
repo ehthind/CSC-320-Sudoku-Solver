@@ -1,10 +1,6 @@
 import sys
 import math
 
-
-def convBaseTen(convNum):
-	return (convNum-1)%9 + 1
-
 def printPuzzle(sudokuPuzz):
 	lenOfPuzzle = len(sudokuPuzz)
 	row = int(math.sqrt(lenOfPuzzle))
@@ -49,8 +45,9 @@ def main():
 	for checkNum in iterate:
 		if checkNum.isdigit() and checkNum>0:
 			conv = int(checkNum)
-			BTenRet = int(convBaseTen(conv))
-			sudFinal.append(int(BTenRet))
+			#convert to base 10
+			baseTen = int((conv-1)%9 + 1)
+			sudFinal.append(int(baseTen))
 	#print final result
 	printPuzzle(sudFinal)
 
