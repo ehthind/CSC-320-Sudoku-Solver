@@ -1,6 +1,6 @@
 import sys
 
-global FILE
+FILE = 0
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   convertBase9(x,y,z)
@@ -11,16 +11,92 @@ def convertBase9(x,y,z):
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-#   givenValuesCNF(puzzle)
+#   givenCNF(puzzle)
 #
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-def givenValuesCNF(puzzle):
+def givenCNF(board):
   count = 0
   for x in range(9):
     for y in range(9):
-      if grid[x][y] != '0':
-        writeToFile(str(convertBase9(x+1, y+1, int(grid[x][y]))) + ' 0\n')
+      if board[x][y] != '0':
+        writeToFile(str(convertBase9(x+1, y+1, int(board[x][y]))) + ' 0\n')
         count += 1
+  return count
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#   rowCNF()
+#
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+def rowCNF():
+  count = 0
+  for y in range(1, 10):
+    for z in range(1, 10):
+      for x in range(1, 9):
+        for i in range(x + 1, 10):
+          writeToFile("-" + str(convertBase9(x, y, z)) + " -" +  str(convertBase9(i, y, z)) + " 0\n")
+          count += 1
+  return count
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#   columnCNF()
+#
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+def columnCNF():
+  count = 0
+  for x in range(1,10):
+    for z in range(1, 10):
+      for y in range(1,9):
+        for i in range(y + 1, 10):
+          writeToFile("-" + str(convertBase9(x, y, z)) + " -" + str(convertBase9(x, i, z)) + " 0\n")
+          count += 1
+  return count
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#   soloCNF()
+#
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+def soloCNF():
+  count = 0
+  for x in range(1, 10):
+    for y in range(1, 10):
+      for z in range(1, 10):
+        writeToFile(str(convertBase9(x, y, z))+' ')
+      writeToFile(' 0\n') # Terminate with a 0
+      count += 1
+  return count
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#   gen3x3CNF()
+#
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+def gen3X3CNF():
+  count = 0
+  #Turn the grid into
+  for z in range(1, 10):    #Numbers from 0-8 (possible input values, in base 9)
+    for gridX in range(0, 3):    #Grid (3x3 boxes) along the X axis
+      for gridY in range(0, 3):  #Grid (3x3 boxes) along the Y axis
+        for x in range(1, 4):
+          for y in range(1, 4):
+
+            #Minimal clauses
+            for k in range(y + 1, 4):
+              a = gridX * 3 + x
+              b = gridY * 3 + y
+              c = gridY * 3 + k
+              writeToFile('-' + str(convertBase9(a,b,z)) + ' -' + str(convertBase9(a,c,z)) + ' 0\n')
+              count += 1
+
+            for k in range (x + 1, 4):
+              for l in range(1, 4):
+                a = gridX * 3 + x
+                b = gridY * 3 + y
+                c = gridX * 3 + k
+                d = gridY * 3 + l
+                writeToFile('-' +  str(convertBase9(a,b,z)) + ' -' + str(convertBase9(c,d,z)) + ' 0\n')
+                count += 1
   return count
 
 
@@ -66,40 +142,7 @@ def makeBoard(puzzle):
       arr[i][j] = puzzle[ i * 9 + j ]
   return arr
 
-def basic_clauses():
-	for i in range(1,10):
-		for j in range(1,10):
-			for k in range(1,10):
-				temp  = temp + str(convertBase9(i,j,k);)
-			temp = temp + ' 0\n'
-			writeToFile(temp);
-return
 
-def rule_clauses():
-	k =1
-	j =1
-	v =1+j
-	for i in range(1,10):
-		while(j!=10):
-			for v in range(v, 10):
-				temp = '-'
-				temp = temp + str(convertBase9(i, j, k);)
-				temp = temp + '-'
-				temp = temp + str(convertBase9(i, v, k);)
-				temp = temp + '0\n'
-				writeToFile(temp);
-			j = j+1
-			v = j+1
-			if j==10:
-				j =1
-				v =j+1
-				k = k+1
-			if k==10:
-				k = 1
-				break
-		j =1
-		v =j+1
-	return
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   main()
 #
@@ -112,6 +155,7 @@ def main():
         print("To run: python sat2sud.py <input> <minisat path>")
         sys.exit(-1)
     try:
+        global FILE
         FILE = open('output_file', 'w')
     except:
         print("Unable to open file: " + 'output_file')
@@ -119,7 +163,14 @@ def main():
 
     formatPuzzle = parseAndFormat(sys.argv[1])
     board = makeBoard(formatPuzzle)
-    print(board)
+
+    clauses = 0
+    clauses += givenCNF(board)
+    clauses += soloCNF()
+    clauses += columnCNF()
+    clauses += rowCNF()
+    clauses += gen3X3CNF()
+
 
 
 if __name__ == "__main__":
