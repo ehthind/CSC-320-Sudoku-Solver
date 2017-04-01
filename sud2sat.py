@@ -143,6 +143,12 @@ def makeBoard(puzzle):
   return arr
 
 
+def line_prepender(filename, line):
+    with open(filename, 'r+') as f:
+        content = f.read()
+        f.seek(0, 0)
+        f.write(line.rstrip('\r\n') + '\n' + content)
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   main()
 #
@@ -170,7 +176,15 @@ def main():
     clauses += columnCNF()
     clauses += rowCNF()
     clauses += gen3X3CNF()
+    FILE.close()
 
+    filename = 'output_file'
+    line = "p cnf 729 "
+
+    newC = str(clauses)
+    line += newC
+    line += "\n"
+    line_prepender(filename, line)
 
 
 if __name__ == "__main__":
