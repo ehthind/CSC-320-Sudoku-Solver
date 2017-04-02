@@ -1,36 +1,34 @@
 import sys
 import math
 
-def printPuzzle(sudokuPuzz):
-	lenOfPuzzle = len(sudokuPuzz)
-	row = int(math.sqrt(lenOfPuzzle))
-	sectInPuzzle=int(math.sqrt(row))
-	numSect= int(row / sectInPuzzle)
-	count = 0
-	loop = sectInPuzzle * 3
-	#iterate through number of sectors
-	for makeDash in range(0,numSect):
-		if makeDash != 0:
-			sys.stdout.write(' ')
-			#nested loops created to insert '-' for 3x3 box
-			for dash in range(0, numSect):
-				if dash != 0:
-					sys.stdout.write('-')
-				for dash2 in range(0, loop):
-					sys.stdout.write('-')
+def printPuzzle(currPuzz):
+	lenOfPuzz = len(currPuzz)
+	rowInPuzz = int(math.sqrt(lenOfPuzz))
+	sect = int(math.sqrt(rowInPuzz))
+	numberOfsects = int(rowInPuzz/sect)
+	inc = 0
+	loop =(sect*3)-1
+	for value in range(0, numberOfsects):
+		if value != 0:
 			sys.stdout.write('-')
+			
+			for currVal in range(0, numberOfsects):
+				if currVal != 0:
+					sys.stdout.write('-')
+				for dash in range(0, loop):
+					sys.stdout.write('-')
 			print '-'
-		#print values as well as inserting | for 3x3 box
-		for section in range(0,sectInPuzzle):
-			for line in range(0,numSect):
-				sys.stdout.write(' |')
-				for printNum in range(0,sectInPuzzle):
-					sys.stdout.write("%2d" %sudokuPuzz[count])
-					if printNum!= sectInPuzzle - 1:
-						sys.stdout.write(" ") #space between 3x3 box
-					count +=1
-			sys.stdout.write(' |')
-			print ' '
+		
+		for line in range(0, sect):
+			for currVal in range(0,numberOfsects):
+				sys.stdout.write('|')
+				for number in range(0, sect):
+					sys.stdout.write("%2d"% currPuzz[inc])
+					if number != sect- 1:
+						sys.stdout.write(" ")
+					inc += 1
+			print '|'
+
 
 def main():
 	try:
@@ -38,18 +36,14 @@ def main():
 	except:
 		print "Error: Cannot write to file"
 		return
-
-	sudFinal=[]
-	#read file and split at space
-	iterate = file.read().split(' ')
-	for checkNum in iterate:
-		if checkNum.isdigit() and checkNum>0:
-			conv = int(checkNum)
-			#convert to base 10
-			baseTen = int((conv-1)%9 + 1)
-			sudFinal.append(int(baseTen))
+	finalPuzz = []
+	for currNum in file.read().split():
+		if currNum.isdigit() and currNum> 0:
+			checkNum = int(currNum)
+			convToBTen = int((checkNum- 1)%9 + 1)
+			finalPuzz.append(convToBTen)	
 	#print final result
-	printPuzzle(sudFinal)
+	printPuzzle(finalPuzz)
 
 if __name__ == "__main__":
 	main()
