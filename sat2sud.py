@@ -30,18 +30,18 @@ def printPuzzle(sudokuPuzz):
 						sys.stdout.write(" ") #space between 3x3 box
 					count +=1
 			sys.stdout.write(' |')
-			print ' '	
+			print ' '
 
 def main():
 	try:
-		file = open("output","r")
+		file = open("final","r")
 	except:
 		print "Error: Cannot write to file"
 		return
 
 	sudFinal=[]
 	#read file and split at space
-	iterate = file.read().split(' ') 
+	iterate = file.read().split(' ')
 	for checkNum in iterate:
 		if checkNum.isdigit() and checkNum>0:
 			conv = int(checkNum)
@@ -53,5 +53,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
-
