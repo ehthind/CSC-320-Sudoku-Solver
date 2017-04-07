@@ -233,7 +233,7 @@ def main():
 
     for encoded in encoded_files:
         SAT_output_file = ''.join(('SAT_solved_puzzles/SAT_output_puzzle_',str(output_count)))
-        call([sys.argv[2], encoded, SAT_output_file])
+        call([sys.argv[2], encoded, SAT_output_file, '>', 'minisat_output.txt'])
         SAT_files.append(SAT_output_file)
         output_count += 1
 
