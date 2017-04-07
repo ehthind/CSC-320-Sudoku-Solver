@@ -56,12 +56,11 @@ def main():
 	printPuzzle(finalPuzz)
 	solved_puzzle = ''
 	solved_puzzle = ''.join((sys.argv[1],'_SOLVED'))
-	print(solved_puzzle)
-	print(sys.argv[1])
 	try:
 		file = open(solved_puzzle, 'w')
 	except:
 		print('unable to open file')
 		sys.exit(-1)
+	file.write(str(finalPuzz))
 if __name__ == "__main__":
 	main()
