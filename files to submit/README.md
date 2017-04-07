@@ -1,8 +1,8 @@
 # CSC-320-Sudoku-Solver
 
-Amrit Thind V00779722,
-Keifer Edelmayer V00778104,
-Jacqueline Reynolds V00794417,
+Amrit Thind V00779722
+Keifer Edelmayer V00778104
+Jacqueline Reynolds V00794417
 Shikha Bose V00834561
 
 All files present:
@@ -10,6 +10,9 @@ All files present:
 -4x4sat2sud.py
 -sud2sat.py
 -sat2sud.py
+-hard_solved_puzzles
+-Hard Input Statistics
+-Multi_sud2sat.py
 -README.md
 
 Descriptions:
@@ -27,6 +30,15 @@ sud2sat:
 
 sat2sud.py:
 -takes the out put from the mini sat of a 4x4 sudoku and outputs the solved sudoku
+
+hard_solved_puzzles:
+-solved hard puzzles
+
+Hard Input Statistics:
+-stats to the above puzzle solutions
+
+Multi_sud2sat.py:
+-modified sud2sat.py to handle multi line input, the file passed in is read line by line performing the encoding, solving via mini sat then decoding one at a time. The Multi_sat2sud.py file provides this functionality
 
 
 Instructions:
