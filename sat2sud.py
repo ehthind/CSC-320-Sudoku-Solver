@@ -1,6 +1,8 @@
 import sys
 import math
 
+FILE = 0
+
 def printPuzzle(currPuzz):
 	lenOfPuzz = len(currPuzz)
 	rowInPuzz = int(math.sqrt(lenOfPuzz))
@@ -14,30 +16,38 @@ def printPuzzle(currPuzz):
 
 			for currVal in range(0, numberOfsects):
 				if currVal != 0:
+					#FILE.append('-')
 					sys.stdout.write('-')
 				for dash in range(0, loop):
+					#FILE.append('-')
 					sys.stdout.write('-')
-			print '-'
+			#FILE.append('-')
+			print('-')
 
 		for line in range(0, sect):
 			for currVal in range(0,numberOfsects):
+				#FILE.append('|')
 				sys.stdout.write('|')
 				for number in range(0, sect):
+					#FILE.append(currPuzz[inc])
 					sys.stdout.write("%2d"% currPuzz[inc])
 					if number != sect- 1:
+						#FILE.append(' ')
 						sys.stdout.write(" ")
 					inc += 1
+			#FILE.append('|')
 			print '|'
 
 
 def main():
-	try:
-		file = open("final","r")
+	try:    
+		global FILE
+		FILE = open(sys.argv[1])
 	except:
 		print "Error: Cannot write to file"
 		return
 	finalPuzz = []
-	for currNum in file.read().split():
+	for currNum in FILE.read().split():
 		if currNum.isdigit() and currNum> 0:
 			checkNum = int(currNum)
 			convToBTen = int((checkNum- 1)%9 + 1)
