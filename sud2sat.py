@@ -238,11 +238,9 @@ def main():
         SAT_files.append(SAT_output_file)
         output_count += 1
 
-        output_count = 1
+
     for SAT_file in SAT_files:
-        decoded_output_file = ''.join(('decoded_puzzles/decoded_output_puzzle_',str(output_count)))
-        call(['python','sat2sud.py', decoded_output_file])
-        output_count += 1
+        call(['python', 'sat2sud.py', SAT_file])
 
 
 
