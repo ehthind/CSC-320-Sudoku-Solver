@@ -11,14 +11,14 @@ def printPuzzle(currPuzz):
 	for value in range(0, numberOfsects):
 		if value != 0:
 			sys.stdout.write('-')
-			
+
 			for currVal in range(0, numberOfsects):
 				if currVal != 0:
 					sys.stdout.write('-')
 				for dash in range(0, loop):
 					sys.stdout.write('-')
 			print '-'
-		
+
 		for line in range(0, sect):
 			for currVal in range(0,numberOfsects):
 				sys.stdout.write('|')
@@ -41,7 +41,7 @@ def main():
 		if currNum.isdigit() and currNum> 0:
 			checkNum = int(currNum)
 			convToBTen = int((checkNum- 1)%9 + 1)
-			finalPuzz.append(convToBTen)	
+			finalPuzz.append(convToBTen)
 	#print final result
 	printPuzzle(finalPuzz)
 
