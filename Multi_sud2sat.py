@@ -2,7 +2,11 @@ import sys
 import os
 from subprocess import call
 
+
 FILE = 0
+encoded_files = []
+SAT_files = []
+
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   convertBase9(x,y,z)
@@ -70,33 +74,34 @@ def soloCNF():
       count += 1
   return count
 
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   gen3x3CNF()
 #
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def gen3X3CNF():
   count = 0
-  #Turn the grid into
-  for z in range(1, 10):    #Numbers from 0-8 (possible input values, in base 9)
-    for gridX in range(0, 3):    #Grid (3x3 boxes) along the X axis
-      for gridY in range(0, 3):  #Grid (3x3 boxes) along the Y axis
+
+  for z in range(1, 10):
+    for xAxis in range(0, 3):
+      for yAxis in range(0, 3):
         for x in range(1, 4):
           for y in range(1, 4):
 
             #Minimal clauses
             for k in range(y + 1, 4):
-              a = gridX * 3 + x
-              b = gridY * 3 + y
-              c = gridY * 3 + k
+              a = xAxis * 3 + x
+              b = yAxis * 3 + y
+              c = yAxis * 3 + k
               writeToFile('-' + str(convertBase9(a,b,z)) + ' -' + str(convertBase9(a,c,z)) + ' 0\n')
               count += 1
 
             for k in range (x + 1, 4):
               for l in range(1, 4):
-                a = gridX * 3 + x
-                b = gridY * 3 + y
-                c = gridX * 3 + k
-                d = gridY * 3 + l
+                a = xAxis * 3 + x
+                b = yAxis * 3 + y
+                c = xAxis * 3 + k
+                d = yAxis * 3 + l
                 writeToFile('-' +  str(convertBase9(a,b,z)) + ' -' + str(convertBase9(c,d,z)) + ' 0\n')
                 count += 1
   return count
@@ -116,13 +121,32 @@ def writeToFile(string):
 #   Formats input file into one string
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def parseAndFormat(filePath):
-
+    puzzle_list = []
     try:
-        open_file = open(filePath)
+        fp = open(filePath)
     except:
         print("Unable to open file: " + filePath)
         sys.exit(-1)
 
+    L = ''
+    temp = 0
+    for i, line in enumerate(fp):
+
+        if i%10 != 0:
+            # line we need
+            L += ''.join(line.split())
+        elif i == 0:
+            # first line we skip
+            temp += 1
+        else:
+            # line we should save and skip
+            L = L.replace('.', '0').replace('*', '0').replace('?', '0')
+            puzzle_list.append(L)
+            K = ''
+            L = K
+
+    fp.close()
+    '''
     content = open_file.readlines()
     encodedLine = ""
     for line in content:
@@ -130,7 +154,8 @@ def parseAndFormat(filePath):
 
     #remove and replace all wildcards with 0
     encodedLine = encodedLine.replace('.', '0').replace('*', '0').replace('?', '0')
-    return encodedLine
+    '''
+    return puzzle_list
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -151,6 +176,7 @@ def line_prepender(filename, line):
         f.seek(0, 0)
         f.write(line.rstrip('\r\n') + '\n' + content)
 
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #   main()
 #
@@ -158,39 +184,62 @@ def line_prepender(filename, line):
 def main():
 
     print("Starting the SAT Solver!\n")
+
+    # ensure proper system arguments
     if len(sys.argv) < 2:
         print("Error: Incorrect arguments")
         print("To run: python sat2sud.py <input> <minisat path>")
         sys.exit(-1)
-    try:
-        global FILE
-        FILE = open('output_file', 'w')
-    except:
-        print("Unable to open file: " + 'output_file')
-        sys.exit(-1)
 
-    formatPuzzle = parseAndFormat(sys.argv[1])
-    board = makeBoard(formatPuzzle)
+    formatPuzzleList = parseAndFormat(sys.argv[1])
 
-    clauses = 0
-    clauses += givenCNF(board)
-    clauses += soloCNF()
-    clauses += columnCNF()
-    clauses += rowCNF()
-    clauses += gen3X3CNF()
-    FILE.close()
+    encoded_filename = ''
 
-    filename = 'output_file'
-    line = "p cnf 729 "
+    puzzle_count = 1
+    for puzzle in formatPuzzleList:
+        encoded_filename = ''.join(('encoded_puzzles/encoded_puzzle_',str(puzzle_count)))
+        encoded_files.append(encoded_filename)
 
-    newC = str(clauses)
-    line += newC
-    line += "\n"
-    line_prepender(filename, line)
+        try:
+            global FILE
+            FILE = open(encoded_filename, 'w')
+        except:
+            print("Unable to open file: " + 'encoded_filename')
+            sys.exit(-1)
 
-    call([sys.argv[2], filename, 'SAT_output'])
+        #make clauses
+        board = makeBoard(puzzle)
+        clauses = 0
+        clauses += givenCNF(board)
+        clauses += soloCNF()
+        clauses += columnCNF()
+        clauses += rowCNF()
+        clauses += gen3X3CNF()
 
-    call(['python', 'sat2sud.py', 'SAT_output'])
+        FILE.close()
+
+        #prepend 'p cnf <# variables> <# clauses>' to file
+        pre_filename = encoded_filename
+        line = "p cnf 729 "
+        newC = str(clauses)
+        line += newC
+        line += "\n"
+        line_prepender(pre_filename, line)
+
+        puzzle_count += 1
+
+
+        output_count = 1
+
+    for encoded in encoded_files:
+        SAT_output_file = ''.join(('SAT_solved_puzzles/SAT_output_puzzle_',str(output_count)))
+        call([sys.argv[2], encoded, SAT_output_file, '>', 'minisat_output.txt'])
+        SAT_files.append(SAT_output_file)
+        output_count += 1
+
+
+    for SAT_file in SAT_files:
+        call(['python', 'sat2sud.py', SAT_file])
 
 
 
