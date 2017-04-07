@@ -1,5 +1,7 @@
 import sys
 import os
+from subprocess import call
+
 
 FILE = 0
 encoded_files = []
@@ -218,7 +220,7 @@ def main():
         FILE.close()
 
         #prepend 'p cnf <# variables> <# clauses>' to file
-        pre_filename = 'encoded_filename'
+        pre_filename = encoded_filename
         line = "p cnf 729 "
         newC = str(clauses)
         line += newC
@@ -229,6 +231,7 @@ def main():
 
 
         output_count = 1
+
     for encoded in encoded_files:
         SAT_output_file = ''.join(('SAT_solved_puzzles/SAT_output_puzzle_',str(output_count)))
         call([sys.argv[2], encoded, SAT_output_file])
