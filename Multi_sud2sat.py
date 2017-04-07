@@ -122,30 +122,17 @@ def writeToFile(string):
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def parseAndFormat(filePath):
     puzzle_list = []
-    try:
-        fp = open(filePath)
-    except:
-        print("Unable to open file: " + filePath)
-        sys.exit(-1)
 
     L = ''
     temp = 0
-    for i, line in enumerate(fp):
+    for line in enumerate(fp):
 
-        if i%10 != 0:
-            # line we need
-            L += ''.join(line.split())
-        elif i == 0:
-            # first line we skip
-            temp += 1
-        else:
-            # line we should save and skip
-            L = L.replace('.', '0').replace('*', '0').replace('?', '0')
-            puzzle_list.append(L)
-            K = ''
-            L = K
+        L += ''.join(line.split())
+        L = L.replace('.', '0').replace('*', '0').replace('?', '0')
+        puzzle_list.append(L)
+        K = ''
+        L = K
 
-    fp.close()
     '''
     content = open_file.readlines()
     encodedLine = ""
