@@ -122,6 +122,11 @@ def writeToFile(string):
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 def parseAndFormat(filePath):
     puzzle_list = []
+    try:
+        fp = open(filePath)
+    except:
+        print("Unable to open file: " + filePath)
+        sys.exit(-1)
 
     L = ''
     temp = 0
@@ -133,6 +138,7 @@ def parseAndFormat(filePath):
         K = ''
         L = K
 
+    fp.close()
     '''
     content = open_file.readlines()
     encodedLine = ""
