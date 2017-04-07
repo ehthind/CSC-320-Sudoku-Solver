@@ -131,13 +131,13 @@ def parseAndFormat(filePath):
     L = ''
     temp = 0
     for i, line in enumerate(fp):
-
-        L += ''.join(line.rsplit())
-        L = L.replace('.', '0').replace('*', '0').replace('?', '0')
-        puzzle_list.append(L)
-        K = ''
-        L = K
-
+	if i != 95:
+        	L += ''.join(line.rsplit())
+        	L = L.replace('.', '0').replace('*', '0').replace('?', '0')
+        	puzzle_list.append(L)
+        	K = ''
+        	L = K
+	
     fp.close()
     '''
     content = open_file.readlines()
