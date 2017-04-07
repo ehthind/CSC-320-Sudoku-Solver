@@ -193,12 +193,11 @@ def main():
 
     formatPuzzleList = parseAndFormat(sys.argv[1])
 
-    output_file_extension = 1
     encoded_filename = ''
 
     puzzle_count = 1
     for puzzle in formatPuzzleList:
-        encoded_filename = ''.join(('encoded_puzzles/encoded_puzzle_',str(output_file_extension)))
+        encoded_filename = ''.join(('encoded_puzzles/encoded_puzzle_',str(puzzle_count)))
         encoded_files.append(encoded_filename)
 
         try:
