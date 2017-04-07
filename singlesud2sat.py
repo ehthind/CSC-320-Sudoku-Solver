@@ -186,6 +186,11 @@ def main():
     line += "\n"
     line_prepender(filename, line)
 
+    call([sys.argv[2], filename, 'SAT_output'])
+
+    call(['python', 'sat2sud.py', 'SAT_output'])
+
+
 
 if __name__ == "__main__":
 	main()
