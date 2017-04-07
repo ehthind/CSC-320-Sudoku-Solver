@@ -57,7 +57,7 @@ def main():
 	solved_puzzle = ''
 	solved_puzzle = ''.join((sys.argv[1],'_SOLVED'))
 	try:
-		file = open(solved_puzzle, 'w')
+		file = open('hard_solved_puzzles', 'a')
 	except:
 		print('unable to open file')
 		sys.exit(-1)
