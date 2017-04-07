@@ -32,7 +32,7 @@ def printPuzzle(currPuzz):
 
 def main():
 	try:
-		file = open("final","r")
+		file = open(sys.argv[1])
 	except:
 		print "Error: Cannot write to file"
 		return
@@ -44,6 +44,15 @@ def main():
 			finalPuzz.append(convToBFive)
 	#print final result
 	printPuzzle(finalPuzz)
+
+	solved_puzzle = ''
+	solved_puzzle = ''.join((sys.argv[1],'_SOLVED'))
+	try:
+		file = open(solved_puzzle, 'w')
+	except:
+		print('unable to open file')
+		sys.exit(-1)
+	file.write(str(finalPuzz))
 
 if __name__ == "__main__":
 	main()
