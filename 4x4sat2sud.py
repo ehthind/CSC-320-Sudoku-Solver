@@ -40,8 +40,8 @@ def main():
 	for currNum in file.read().split():
 		if currNum.isdigit() and currNum> 0:
 			checkNum = int(currNum)
-			convToBTen = int((checkNum- 1)%9 + 1)
-			finalPuzz.append(convToBTen)
+			convToBFive = int((checkNum- 1)%4 + 1)
+			finalPuzz.append(convToBFive)
 	#print final result
 	printPuzzle(finalPuzz)
 
