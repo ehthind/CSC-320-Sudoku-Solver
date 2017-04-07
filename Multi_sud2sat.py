@@ -130,9 +130,9 @@ def parseAndFormat(filePath):
 
     L = ''
     temp = 0
-    for line in enumerate(fp):
+    for i, line in enumerate(fp):
 
-        L = line
+        L += ''.join(line.split())
         L = L.replace('.', '0').replace('*', '0').replace('?', '0')
         puzzle_list.append(L)
         K = ''
