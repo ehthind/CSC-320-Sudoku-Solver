@@ -1,8 +1,8 @@
 # CSC-320-Sudoku-Solver
 
-Amrit Thind V00779722
-Keifer Edelmayer V00778104
-Jacqueline Reynolds V00794417
+Amrit Thind V00779722,
+Keifer Edelmayer V00778104,
+Jacqueline Reynolds V00794417,
 Shikha Bose V00834561
 
 All files present:
