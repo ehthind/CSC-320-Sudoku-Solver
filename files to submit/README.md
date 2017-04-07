@@ -2,8 +2,8 @@
 
 Amrit Thind V00779722
 Keifer Edelmayer V00778104
-Jacqueline V00794417
-Shikha V00834561
+Jacqueline Reynolds V00794417
+Shikha Bose V00834561
 
 All files present:
 -4x4sud2sat.py
