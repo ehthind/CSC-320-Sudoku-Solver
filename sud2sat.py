@@ -229,9 +229,9 @@ def main():
 
 
         output_count = 1
-    for encoded_file in encoded_files:
+    for encoded in encoded_files:
         SAT_output_file = ''.join(('SAT_solved_puzzles/SAT_output_puzzle_',str(output_count)))
-        call([sys.argv[2], encoded_file, SAT_output_file])
+        call([sys.argv[2], encoded, SAT_output_file])
         SAT_files.append(SAT_output_file)
         output_count += 1
 
